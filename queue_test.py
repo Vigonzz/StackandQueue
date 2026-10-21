@@ -118,10 +118,6 @@ class TestQueue(unittest.TestCase):
         self.assertEqual(43, mixed_stack.dequeue())
         self.assertEqual([6,8], mixed_stack.dequeue())
 
-    
-
-
-    
 
 if __name__ == "__main__":
     unittest.main()
