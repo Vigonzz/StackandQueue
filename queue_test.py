@@ -1,6 +1,6 @@
 # Testing the task with unittest
 import unittest
-from queue_db import *
+from queue_db import Queue
 
 
 class TestQueue(unittest.TestCase):
