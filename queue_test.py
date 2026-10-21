@@ -51,10 +51,12 @@ class TestQueue(unittest.TestCase):
         poll_not_remove = Queue()
 
         poll_not_remove.enqueue(50)
-        self.assertEqual(1, poll_not_remove.size())
-
         poll_not_remove.enqueue(60)
-        self.assertEqual(2, poll_not_remove.size())
+        poll_not_remove.enqueue(70)
+
+        self.assertEqual(50, poll_not_remove.poll())
+        self.assertEqual(50, poll_not_remove.poll())
+        self.assertEqual(3, poll_not_remove.size())
 
     def test_dequeue_empty(self):
         ''' Test for using dequeue on empty stack it should return an indexError '''
