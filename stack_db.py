@@ -26,7 +26,7 @@ class Stack:
     def size(self):
         return len(self._elements)
     
-    # I wanted to better understand inheritance: GeeksforGeeks. (2026b, September 19). Inheritance in python. https://www.geeksforgeeks.org/python/inheritance-in-python/#google_vignette 
+
     def is_empty(self):
          return self.size() == 0
     

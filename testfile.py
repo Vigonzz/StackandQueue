@@ -1,7 +1,7 @@
 # Testing the task with unittest
 # Needed to understand unittesting as it was my first time using it:
 # Unittest - Unit Testing Framework. Python documentation. (n.d.-b). https://docs.python.org/3/library/unittest.html 
-
+# For general understanding of inheritance: GeeksforGeeks. (2026b, September 19). Inheritance in python. https://www.geeksforgeeks.org/python/inheritance-in-python/#google_vignette 
 import unittest
 from stack_db import Stack
 
