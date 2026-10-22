@@ -1,6 +1,7 @@
 # Testing the task with unittest
 
 # The same test case as the testfile (task 1) since we are using a stack (just with queue within it)
+# The only exception is the last added test which test behavior
 import unittest
 from stack_two_queues import *
 
