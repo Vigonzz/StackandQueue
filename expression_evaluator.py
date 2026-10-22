@@ -22,7 +22,7 @@
 
 from stack_db import Stack
 
-four_operators = {1: '+', 1: '-', 2: '*', 2: '/'}
+four_operators = {'+': 1, '-': 1, '*': 2, '/': 2}
 
 
 # Helper function
@@ -33,19 +33,37 @@ def apply_operator(num_stack, op_stack):
 
     if operator == "+":
         result = left + right
-    elif "-":
+    elif operator == "-":
         result = left - right
-    elif "*":
+    elif operator == "*":
         result = left * right
-    elif "/":
+    elif operator == "/":
         if right == 0:
             raise ZeroDivisionError("Can not divide by zero")
         result = left / right
     else:
-        ValueError("Unknown operator")
+        raise ValueError("Unknown operator")
     
     num_stack.push(result)
     
+def evaluate(expression):
+    tokens = tokenize(expression)
+    num_stack = Stack()
+    op_stack = Stack()
+
+    # Loop over functions
+    for token in tokens:
+        if isinstance(token, int):
+            num_stack.push(token)
+        else:
+            while not op_stack.is_empty() and four_operators[op_stack.peek()] >= four_operators[token]:
+                apply_operator(num_stack, op_stack)
+            
+            op_stack.push(token)
+
+    while not op_stack.is_empty():
+        apply_operator(num_stack, op_stack)
+    return num_stack.pop()
 
 
 # I needed more reading and examples on flags in python:
@@ -93,32 +111,45 @@ def tokenize(expression):
             else:
                 raise ValueError(f"Invalid operator: '{character}' at position: {index}")
                 
-
-
     if expect_number:
         raise ValueError("Expression is empty or ends with an operator")
     
     return tokens
 
 
-# Test prints for checking the operator and overall input
-print(tokenize("42"))
-print(tokenize("  7 "))
-print(tokenize("-15"))
-# print(tokenize("2147483648"))
+if __name__ == "__main__":
 
-# Testing the arithmetic operator 
-print(tokenize("10 + 20 * 2"))
-print(tokenize("3 + 4"))
-print(tokenize("10 * -2"))
-print(tokenize("10 - -5"))
 
-# Check for error handling
-# print(tokenize("foo / 30 + 7")) - passed
-# print(tokenize("10 % 3")) - passed
-# print(tokenize("10 20")) - passed
-# print(tokenize("5 +")) - passed
-# print(tokenize("")) - passed
+    # Test prints for checking the operator and overall input
+    print(tokenize("42"))
+    print(tokenize("  7 "))
+    print(tokenize("-15"))
+    # print(tokenize("2147483648"))
+
+    # Testing the arithmetic operator 
+    print(tokenize("10 + 20 * 2"))
+    print(tokenize("3 + 4"))
+    print(tokenize("10 * -2"))
+    print(tokenize("10 - -5"))
+
+    # Check for error handling
+    # print(tokenize("foo / 30 + 7")) - passed
+    # print(tokenize("10 % 3")) - passed
+    # print(tokenize("10 20")) - passed
+    # print(tokenize("5 +")) - passed
+    # print(tokenize("")) - passed
+
+    # Testing evaluating the expression 
+    print(evaluate("10 + 20 * 2")) 
+    print(evaluate("10 - 5 - 2"))
+    print(evaluate("100 / 10 / 2"))
+    print(evaluate("10 * -2"))
+    print(evaluate("7"))
+
+    # print(evaluate("10/0")) - passed
+
+
+
 
 
 
