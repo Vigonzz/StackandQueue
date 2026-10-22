@@ -22,6 +22,32 @@
 
 from stack_db import Stack
 
+four_operators = {1: '+', 1: '-', 2: '*', 2: '/'}
+
+
+# Helper function
+def apply_operator(num_stack, op_stack):
+    operator = op_stack.pop()
+    right = num_stack.pop()
+    left = num_stack.pop()
+
+    if operator == "+":
+        result = left + right
+    elif "-":
+        result = left - right
+    elif "*":
+        result = left * right
+    elif "/":
+        if right == 0:
+            raise ZeroDivisionError("Can not divide by zero")
+        result = left / right
+    else:
+        ValueError("Unknown operator")
+    
+    num_stack.push(result)
+    
+
+
 # I needed more reading and examples on flags in python:
 # Working with flags in Python. (n.d.). https://code.mu/en/python/book/prime/loops/flags/# 
 def tokenize(expression):
