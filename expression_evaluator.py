@@ -29,6 +29,8 @@ def tokenize(expression):
     index = 0
     expect_number = True
 
+    # Walks through the whole string
+    # Once index reaches the length , every character handled
     while index < len(expression):
         character = expression[index]
 
@@ -42,9 +44,10 @@ def tokenize(expression):
                 sign = -1
                 index += 1 
             if index >= len(expression) or not expression[index].isdigit():
-                raise ValueError("Should be a number at position {number}")
-                
+                raise ValueError("Should be a number")
+
             digits = ""
+            # Reads one number and placing the characters into the digits string
             while index < len(expression) and expression[index].isdigit():
                 digits += expression[index]
                 index += 1
@@ -53,8 +56,17 @@ def tokenize(expression):
 
             if number < -(2 ** 31) or number > 2 ** 31 - 1:
                 raise ValueError(f"Invalid operator {number}")
+            
             tokens.append(number)
             expect_number = False
+        else:
+            if character in "+-*/":
+                tokens.append(character)
+                index += 1
+                expect_number = True
+            else:
+                raise ValueError(f"Invalid operator: '{character}' at position: {index}")
+                
 
 
     if expect_number:
@@ -69,8 +81,19 @@ print(tokenize("  7 "))
 print(tokenize("-15"))
 # print(tokenize("2147483648"))
 
-# b
+# Testing the arithmetic operator 
 print(tokenize("10 + 20 * 2"))
 print(tokenize("3 + 4"))
-print(tokenize("10 * 2"))
+print(tokenize("10 * -2"))
 print(tokenize("10 - -5"))
+
+# Check for error handling
+# print(tokenize("foo / 30 + 7")) - passed
+# print(tokenize("10 % 3")) - passed
+# print(tokenize("10 20")) - passed
+# print(tokenize("5 +")) - passed
+# print(tokenize("")) - passed
+
+
+
+
